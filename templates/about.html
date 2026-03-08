@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}About - Boston Affordable Housing{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>About This Project</h1>
+  <p>Methodology, data sources, and limitations.</p>
+</div>
+<div class="container">
+  <div class="about-section">
+    <h2>Data Source</h2>
+    <p>This project uses the <a href="https://data.boston.gov/dataset/income-restricted-housing" target="_blank">Income-Restricted Housing Inventory (2022)</a> published by the City of Boston's Mayor's Office of Housing (MOH) on Analyze Boston.</p>
+    <p>The dataset includes {{ total }} projects covering public housing owned by the Boston Housing Authority (BHA), privately-owned housing built with city funding, and privately-owned housing created through programs like Low-Income Housing Tax Credits (LIHTC) or the Inclusionary Development Policy (IDP).</p>
+    <p>The database only includes units that have a deed-restriction dictating their maximum rents or prices.</p>
+  </div>
+
+  <div class="about-section">
+    <h2>Geocoding</h2>
+    <p>The original dataset provides only project name, neighborhood, and zip code &mdash; no street addresses or coordinates. To place projects on the map, we geocoded all {{ total }} projects using the <strong>Google Geocoding API</strong>.</p>
+    <p><strong>{{ geocoded_count }} of {{ total }} projects ({{ "%.1f"|format(geocoded_count / total * 100) }}%)</strong> were successfully mapped to addresses. {{ total - geocoded_count }} projects could not be reliably geocoded and appear in the data table only.</p>
+    <p>Many project names in the dataset use anonymized street numbers (e.g., "xxxx Blue Hill Ave"). The geocoder resolves these to the correct street but not the exact building number.</p>
+  </div>
+
+  <div class="about-section">
+    <h2>Limitations</h2>
+    <ul>
+      <li>Data reflects the 2022 inventory and may not include recent additions or closures.</li>
+      <li>Geocoded locations are approximate for projects without specific addresses.</li>
+      <li>Some project names are anonymized ("Suppressed") in the source data for privacy reasons.</li>
+      <li>The dataset does not include market-rate housing or housing that lacks a legal deed restriction.</li>
+    </ul>
+  </div>
+
+  <div class="about-section">
+    <h2>Technology</h2>
+    <ul>
+      <li><strong>Backend:</strong> Python / Flask</li>
+      <li><strong>Map:</strong> Leaflet.js with MarkerCluster</li>
+      <li><strong>Search:</strong> Fuse.js fuzzy matching</li>
+      <li><strong>Geocoding:</strong> Google Geocoding API</li>
+      <li><strong>Data:</strong> City of Boston Open Data (Analyze Boston)</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

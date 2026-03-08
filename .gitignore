@@ -1,0 +1,7 @@
+.env
+__pycache__/
+*.pyc
+.DS_Store
+.claude/
+index.html
+raw_files/geocode_cache*.json

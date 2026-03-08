@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Housing Map - Boston Affordable Housing{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="https://unpkg.com/fuse.js@7.0.0/dist/fuse.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Housing Map</h1>
+  <p>{{ geocoded_count }} of {{ total }} projects mapped to addresses ({{ "%.1f"|format(geocoded_count / total * 100) }}%). {{ total - geocoded_count }} projects appear in table only.</p>
+</div>
+<div class="container">
+  <div class="stats" id="stats"></div>
+  <div class="filters">
+    <input type="text" id="search" placeholder="Search by name, neighborhood, or zip...">
+    <select id="neighborhood"><option value="">All Neighborhoods</option></select>
+    <select id="tenure"><option value="">All Tenure Types</option></select>
+    <select id="pubpriv"><option value="">Public & Private</option></select>
+    <label class="toggle-btn" id="senior-label"><input type="checkbox" id="senior" hidden> Senior (62+)</label>
+    <label class="toggle-btn" id="section8-label"><input type="checkbox" id="section8" hidden> Section 8</label>
+  </div>
+  <div class="view-toggle">
+    <button id="btn-table" onclick="App.setView('table')">Table</button>
+    <button id="btn-map" class="active" onclick="App.setView('map')">Map</button>
+  </div>
+  <div class="result-count" id="result-count"></div>
+  <div id="fuzzy-panel">
+    <h3>No exact matches. Did you mean one of these?</h3>
+    <div class="fuzzy-results" id="fuzzy-results"></div>
+    <div id="fuzzy-map"></div>
+  </div>
+  <div class="table-wrap" id="table-view">
+    <table>
+      <thead id="thead"></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <div id="map"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/config.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/filters.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/table.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/fuzzy.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock %}

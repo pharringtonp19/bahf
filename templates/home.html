@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Boston Affordable Housing Finder{% endblock %}
+
+{% block content %}
+<div class="hero">
+  <h1>Boston Affordable Housing Finder</h1>
+  <p>Explore {{ stats.total_projects | int }} income-restricted housing projects across {{ stats.neighborhoods }} Boston neighborhoods, totaling {{ "{:,}".format(stats.restricted_units | int) }} affordable units.</p>
+  <div class="hero-actions">
+    <a href="/map" class="btn btn-primary">Explore the Map</a>
+    <a href="/audit" class="btn btn-secondary">View Data Audit</a>
+  </div>
+</div>
+
+<div class="container">
+  <div class="stats" id="stats">
+    <div class="stat-card">
+      <div class="label">Projects</div>
+      <div class="value">{{ "{:,}".format(stats.total_projects | int) }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Total Units</div>
+      <div class="value">{{ "{:,}".format(stats.total_units | int) }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Income-Restricted</div>
+      <div class="value">{{ "{:,}".format(stats.restricted_units | int) }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Neighborhoods</div>
+      <div class="value">{{ stats.neighborhoods }}</div>
+    </div>
+  </div>
+
+  <div class="home-grid">
+    <div class="home-card">
+      <h2>Interactive Map</h2>
+      <p>Browse all {{ "{:,}".format(stats.total_projects | int) }} income-restricted housing projects on an interactive map. Filter by neighborhood, tenure type, and more.</p>
+      <a href="/map">View Map &rarr;</a>
+    </div>
+    <div class="home-card">
+      <h2>Data Audit</h2>
+      <p>Automated quality checks on the housing inventory data: geocoding accuracy, numeric consistency, and completeness.</p>
+      <a href="/audit">View Audit &rarr;</a>
+    </div>
+    <div class="home-card">
+      <h2>About</h2>
+      <p>Learn about the data sources, methodology, and limitations of this project.</p>
+      <a href="/about">Learn More &rarr;</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

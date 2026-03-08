@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Boston Affordable Housing{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="/">BAFH</a>
+      <div class="nav-links">
+        <a href="/" class="{{ 'active' if request.endpoint == 'index' }}">Home</a>
+        <a href="/map" class="{{ 'active' if request.endpoint == 'housing_map' }}">Map</a>
+        <a href="/audit" class="{{ 'active' if request.endpoint == 'audit' }}">Data Audit</a>
+        <a href="/about" class="{{ 'active' if request.endpoint == 'about' }}">About</a>
+      </div>
+    </div>
+  </nav>
+
+  {% block content %}{% endblock %}
+
+  <footer class="site-footer">
+    <p>Data: <a href="https://data.boston.gov/dataset/income-restricted-housing" target="_blank">City of Boston Open Data</a> | Geocoded with Google Geocoding API</p>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>
