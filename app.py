@@ -3,7 +3,6 @@
 from flask import Flask, jsonify, render_template
 from data import load_housing_data, compute_stats, get_filter_options
 from boston_boundary import BOSTON_BOUNDARY
-from audit import run_audit
 
 app = Flask(__name__)
 
@@ -26,20 +25,6 @@ def housing_map():
         geocoded_count=geocoded_count,
     )
 
-
-@app.route("/audit")
-def audit():
-    results = run_audit(housing_data)
-    return render_template("audit.html", audit=results)
-
-
-@app.route("/about")
-def about():
-    return render_template(
-        "about.html",
-        total=len(housing_data),
-        geocoded_count=geocoded_count,
-    )
 
 
 @app.route("/api/housing")
